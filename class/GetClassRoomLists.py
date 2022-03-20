@@ -1,8 +1,9 @@
 import re
 from openpyxl.worksheet.worksheet import Worksheet
 
-from Config import Config, ClassRoomNamesDict
-from ExcelWorksheet import ExcelWorksheet
+from .Config import Config, ClassRoomNamesDictConfig, BuildingsDictsConfig
+from .ExcelWorksheet import ExcelWorksheet
+from .Utils import save_json_file
 
 class GetClassRoomLists():
     """ 获取 所有教室名与教学楼全称对应字典 """
@@ -20,6 +21,7 @@ class GetClassRoomLists():
                 excel_Worksheet_first_sheet
             )
         )
+        self.save_buildings_dicts()
 
     def get_classroom_names_list(self, excel_Worksheet_first_sheet: Worksheet) -> list:
         """ 从xlsx实例中提取所有教室 """
@@ -37,7 +39,7 @@ class GetClassRoomLists():
     def get_buildings_dicts(self, all_classroom_names_list:list) -> dict:
         """ 将所有教室名整理进教学楼全称对应字典 """
         # 获取教学建筑简称与全称的对应
-        classroom_names_dict: dict = ClassRoomNamesDict.json_data
+        classroom_names_dict: dict = ClassRoomNamesDictConfig.classroom_names_dict
         # 初始化数据存储
         buildings_dicts: dict = {}
         for classroom in Config.json_data["building_lists"]:
@@ -58,3 +60,11 @@ class GetClassRoomLists():
                     break
         GetClassRoomLists.classroom_names_list = classroom_list
         return buildings_dicts
+
+    def save_buildings_dicts(self) -> None:
+        """ 将所有教室名与教学楼全称对应字典输出为json文件 """
+        file_name_with_path = BuildingsDictsConfig().file_name_with_path
+        save_json_file(
+            file_name_with_path,
+            GetClassRoomLists.buildings_dicts
+        )

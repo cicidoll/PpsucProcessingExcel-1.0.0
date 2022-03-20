@@ -1,9 +1,9 @@
 from openpyxl.worksheet.worksheet import Worksheet
 
-from ExcelWorksheet import ExcelWorksheet
-from GetClassRoomLists import GetClassRoomLists
-from Config import ClassroomsIsEmptyDictConfig
-from Utils import save_json_file
+from .ExcelWorksheet import ExcelWorksheet
+from .GetClassRoomLists import GetClassRoomLists
+from .Config import ClassroomsIsEmptyDictConfig
+from .Utils import save_json_file
 
 class QueryClassroomIsEmpty:
     """ 分析所有教室列表的有无课情况 """
@@ -42,13 +42,8 @@ class QueryClassroomIsEmpty:
 
     def save_classrooms_is_empty_dict(self) -> None:
         """ 将分析后的数据保存为json """
-        config = ClassroomsIsEmptyDictConfig.json_data
-        classrooms_is_empty_dict_name = config["classrooms_is_empty_dict_name"]
-        classrooms_is_empty_dict_path = config["classrooms_is_empty_dict_path"]
+        file_name_with_path = ClassroomsIsEmptyDictConfig().file_name_with_path
         save_json_file(
-            classrooms_is_empty_dict_path,
-            classrooms_is_empty_dict_name,
+            file_name_with_path,
             QueryClassroomIsEmpty.classrooms_is_empty_dict
         )
-
-QueryClassroomIsEmpty()
