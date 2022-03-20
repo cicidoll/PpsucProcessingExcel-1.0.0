@@ -6,11 +6,6 @@ from Config import Config
 
 class ExcelWorksheet():
     """ 读取xlsx文件并返回第一个sheet对象 """
-
-    # excel所在文件夹名
-    excel_files_path: str = Config.json_data["excel_files_path"]
-    # excel文件名
-    excel_file_name: str = Config.json_data["excel_file_name"]
     # excel表格中的第一个sheet表格对象
     first_sheet: Worksheet = None
 
@@ -29,10 +24,14 @@ class ExcelWorksheet():
 
     def join_path(self) -> str:
         """ 获取excel表格所在路径 """
+        # excel所在文件夹名
+        excel_files_path: str = Config.json_data["excel_files_path"]
+        # excel文件名
+        excel_file_name: str = Config.json_data["excel_file_name"]
         # 当前项目所在的路径
         current_path = Path(".").resolve()
         # 拼接路径
-        excel_data_path = str(current_path / self.excel_files_path / self.excel_file_name)
+        excel_data_path = str(current_path / excel_files_path / excel_file_name)
         return excel_data_path
 
     def init_workbook(self, excel_data_path) -> Workbook:

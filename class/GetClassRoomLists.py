@@ -6,19 +6,18 @@ from ExcelWorksheet import ExcelWorksheet
 
 class GetClassRoomLists():
     """ 获取 所有教室名与教学楼全称对应字典 """
-    # 获取xlsx表格实例
-    excel_Worksheet: ExcelWorksheet = ExcelWorksheet()
-    excel_Worksheet_first_sheet: Worksheet = excel_Worksheet.first_sheet
     # 所有教室列表
     classroom_names_list: list = []
     # 所有教室名与教学楼全称对应字典
     buildings_dicts:dict = {}
 
     def __init__(self) -> None:
-
+        # 获取xlsx表格实例
+        excel_Worksheet: ExcelWorksheet = ExcelWorksheet()
+        excel_Worksheet_first_sheet: Worksheet = excel_Worksheet.first_sheet
         GetClassRoomLists.buildings_dicts = self.get_buildings_dicts(
             self.get_classroom_names_list(
-                GetClassRoomLists.excel_Worksheet_first_sheet
+                excel_Worksheet_first_sheet
             )
         )
 
