@@ -46,7 +46,7 @@ class Config:
     # 初始化数据
     json_data = load_json(config_file_path)
 
-class ExcelFileConfig(Config):
+class ExcelFileConfig:
     """ 分析所有教室是否有课的配置 """
     # 带路径的输出文件名
     file_name_with_path: Path = None
@@ -65,7 +65,7 @@ class ExcelFileConfig(Config):
         file_name_with_path: Path = current_path / excel_file_config["excel_file_path"] / excel_file_config["excel_file_name"]
         return file_name_with_path
 
-class ClassRoomNamesDictConfig(Config):
+class ClassRoomNamesDictConfig:
     """ 教学楼简称&全称对应 """
     classroom_names_dict: dict = {
         "木励警楼": "",
@@ -83,7 +83,7 @@ class ClassRoomNamesDictConfig(Config):
     # 初始化参数
     classroom_names_dict = Config.json_data["classroom_names_dict"]
 
-class ClassroomsIsEmptyDictConfig(Config):
+class ClassroomsIsEmptyDictConfig:
     """ 分析所有教室是否有课的配置 """
     # 带路径的输出文件名
     file_name_with_path: Path = None
@@ -103,7 +103,7 @@ class ClassroomsIsEmptyDictConfig(Config):
         return file_name_with_path
 
 
-class BuildingsDictsConfig(Config):
+class BuildingsDictsConfig:
     """ 将教室分类至各教学楼 """
     # 带路径的输出文件名
     file_name_with_path: Path = None

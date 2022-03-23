@@ -1,3 +1,5 @@
+import re
+from unittest import result
 from openpyxl.worksheet.worksheet import Worksheet
 
 from .ExcelWorksheet import ExcelWorksheet
@@ -32,13 +34,32 @@ class QueryClassroomIsEmpty:
             sub_is_empty_list: list = []
             for sub in excel_worksheet[row][1:36]:
                 if sub.value == '':
-                    sub_is_empty_list.append(0)
+                    sub_is_empty_list.append('0')
                 elif sub.value != '':
-                    sub_is_empty_list.append(1)
+                    reg_result = self.reg_str(sub.value)
+                    sub_is_empty_list.append(reg_result)
             # 更新分析结果至类变量
             QueryClassroomIsEmpty.classrooms_is_empty_dict.update(
                 {sub_classroom: sub_is_empty_list}
             )
+
+    def reg_str(self, input_string: str):
+        ''' 判断当前教学周 '''
+        pattern_1 = re.compile(r'\d{1,2}-\d{1,2}\n')
+        if re.search(pattern_1, input_string) is not None:
+            result = ''
+            re_search_lists = list(set(pattern_1.findall(input_string)))
+            lists_len = len(re_search_lists)
+            for index in range(lists_len):
+                sub_find = re_search_lists[index]
+                split_str = '@' if lists_len > 1 and index < (lists_len-1) else ''
+                sub_result: str = sub_find.strip('\n') + split_str
+                result += sub_result
+            print('-'*20)
+        else:
+            result = '1'
+        print(result)
+        return result
 
     def save_classrooms_is_empty_dict(self) -> None:
         """ 将分析后的数据保存为json """
