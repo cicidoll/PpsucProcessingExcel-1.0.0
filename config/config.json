@@ -36,5 +36,10 @@
         "团综合训练馆": "团区综合训练馆",
         "靶场": "团区靶场",
         "实验楼": "团区实验楼"
+    },
+    "process_is_empty_json_config": {
+        "process_is_empty_json_path": "data",
+        "process_is_empty_json_name": "process_is_empty_json.json",
+        "other_classrooms_json_name": "other_classrooms_json.json"
     }
 }

@@ -52,13 +52,12 @@ class QueryClassroomIsEmpty:
             lists_len = len(re_search_lists)
             for index in range(lists_len):
                 sub_find = re_search_lists[index]
-                split_str = '@' if lists_len > 1 and index < (lists_len-1) else ''
+                # 记录教学周的分隔符
+                split_str = '、' if lists_len > 1 and index < (lists_len-1) else ''
                 sub_result: str = sub_find.strip('\n') + split_str
                 result += sub_result
-            print('-'*20)
         else:
             result = '1'
-        print(result)
         return result
 
     def save_classrooms_is_empty_dict(self) -> None:

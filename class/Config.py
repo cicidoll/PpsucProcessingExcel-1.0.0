@@ -29,9 +29,9 @@ class Config:
         # 分析所有教室是否有课
         "classrooms_is_empty_dict_config":{
             # 分析所有教室是否有课结果的存储路径
-            "classrooms_is_empty_dict_path": "data",
+            "classrooms_is_empty_dict_path": "",
             # 分析所有教室是否有课结果的存储文件名
-            "classrooms_is_empty_dict_name": "classrooms_is_empty_dict.json"
+            "classrooms_is_empty_dict_name": ""
         },
         # 将教室分类至各教学楼
         "buildings_dicts_config": {
@@ -41,7 +41,16 @@ class Config:
             "buildings_dicts_name": ""
         },
         # 教学楼简称&全称对应
-        "classroom_names_dict": {}
+        "classroom_names_dict": {},
+        # 处理QueryClassroomIsEmpty导出的json文件,得到根据周几和时间段分类的排课表
+        "process_is_empty_json_config": {
+            # 处理所有教室排课情况结果的存储路径
+            "process_is_empty_json_path": "",
+            # 处理所有教室排课情况结果-细分时间段的存储文件名
+            "process_is_empty_json_name": "",
+            # 处理 个别指定教学周排课 的存储文件名
+            "other_classrooms_json_name": ""
+        }
     }
     # 初始化数据
     json_data = load_json(config_file_path)
@@ -99,7 +108,9 @@ class ClassroomsIsEmptyDictConfig:
         # 初始化数据
         classrooms_is_empty_dict_config = Config.json_data["classrooms_is_empty_dict_config"]
         # 更新路径数据
-        file_name_with_path: Path = current_path / classrooms_is_empty_dict_config["classrooms_is_empty_dict_path"] / classrooms_is_empty_dict_config["classrooms_is_empty_dict_name"]
+        file_name_with_path: Path = current_path \
+            / classrooms_is_empty_dict_config["classrooms_is_empty_dict_path"] \
+            / classrooms_is_empty_dict_config["classrooms_is_empty_dict_name"]
         return file_name_with_path
 
 
@@ -119,5 +130,35 @@ class BuildingsDictsConfig:
         # 初始化数据
         buildings_dicts_config = Config.json_data["buildings_dicts_config"]
         # 更新路径数据
-        file_name_with_path: Path = current_path / buildings_dicts_config["buildings_dicts_path"] / buildings_dicts_config["buildings_dicts_name"]
+        file_name_with_path: Path = current_path \
+            / buildings_dicts_config["buildings_dicts_path"] \
+            / buildings_dicts_config["buildings_dicts_name"]
         return file_name_with_path
+
+
+class ProcessIsEmptyJsonConfig:
+    """ 处理ProcessIsEmptyJson导出的json文件
+        根据周几和时间段分类的排课表的配置
+    """
+    # 带路径的输出文件名
+    file_name_with_path: Path = None
+
+    def __init__(self) -> None:
+        self.file_name_with_path = self.create_file_name_with_path()
+
+    def create_file_name_with_path(self) -> Path:
+        process_is_empty_json_config: dict = {
+            "process_is_empty_json_path": "",
+            "process_is_empty_json_name": "",
+            "other_classrooms_json_name": ""
+        }
+        # 初始化数据
+        process_is_empty_json_config = Config.json_data["process_is_empty_json_config"]
+        # 更新路径数据
+        process_is_empty_json_name_with_path: Path = current_path \
+            / process_is_empty_json_config["process_is_empty_json_path"] \
+            / process_is_empty_json_config["process_is_empty_json_name"]
+        other_classrooms_json_name_with_path: Path = current_path \
+            / process_is_empty_json_config["process_is_empty_json_path"] \
+            / process_is_empty_json_config["other_classrooms_json_name"]
+        return process_is_empty_json_name_with_path, other_classrooms_json_name_with_path
