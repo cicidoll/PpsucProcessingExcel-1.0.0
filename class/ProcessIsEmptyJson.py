@@ -26,8 +26,6 @@ class ProcessIsEmptyJson:
         """ 处理数据 """
         # 获取classrooms_is_empty_json数据
         classrooms_is_empty_dict: dict = load_json(ProcessIsEmptyJson.classrooms_is_empty_dict_name_with_path)
-        # 教室名列表
-        classrooms_name_list: list = list(classrooms_is_empty_dict.keys())
         # 时间段选择器
         time_list: list = ['am12', 'am34', 'pm12', 'pm34', 'pm56']
         # 导出时间表排课数据
