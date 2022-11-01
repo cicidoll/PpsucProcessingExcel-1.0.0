@@ -51,7 +51,7 @@ class QueryClassroomIsEmpty:
             re_search_lists = list(set(pattern_1.findall(input_string)))
             lists_len = len(re_search_lists)
             for index in range(lists_len):
-                sub_find = re_search_lists[index]
+                sub_find: str = re_search_lists[index]
                 # 记录教学周的分隔符
                 split_str = '、' if lists_len > 1 and index < (lists_len-1) else ''
                 sub_result: str = sub_find.strip('\n') + split_str
